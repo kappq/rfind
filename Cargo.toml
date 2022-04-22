@@ -2,6 +2,9 @@
 name = "rfind"
 version = "0.1.0"
 edition = "2021"
+description = "A simple clone of the `find` command"
+repository = "https://github.com/kappq/rfind"
+readme = "README.md"
 
 [dependencies]
 regex = "1.5.5"
