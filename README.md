@@ -25,7 +25,9 @@ There are only two options:
     - `l` matches a symbolic-link.
 
 ## To-Do
+- [ ] Testing;
+- [ ] Improve error handling;
+- [ ] Improve CLI interface and argument parsing;
 - [ ] Multiple starting points;
-- [ ] Improved CLI and argument parsing;
 - [ ] Options for size, modification date, permission and owner;
 - [ ] Delete files.
