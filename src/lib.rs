@@ -1,30 +1,61 @@
-use std::env::Args;
-use std::fs;
-use std::path::Path;
+use std::{path::{PathBuf, Path}, fs};
 
+use clap::{Arg, Command, crate_authors, crate_description, crate_name, crate_version};
 use regex::Regex;
 
 pub struct Config {
-    starting_point: String,
-    expression: Vec<(String, String)>,
+    starting_points: Vec<PathBuf>,
+    options: Vec<(String, String)>,
 }
 
 impl Config {
-    pub fn new(mut args: Args) -> Config {
-        args.next(); // The first argument is the program name, discard it
+    pub fn new() -> Config {
+        let matches = Command::new(crate_name!())
+            .author(crate_authors!())
+            .version(crate_version!())
+            .about(crate_description!())
+            .arg(
+                Arg::new("starting-point")
+                    .help("The starting-point of the program")
+                    .default_value(".")
+                    .multiple_values(true),
+            )
+            .arg(
+                Arg::new("name")
+                    .help("The regex to match")
+                    .short('n')
+                    .long("name")
+                    .takes_value(true),
+            )
+            .arg(
+                Arg::new("type")
+                    .help("The type of the file")
+                    .short('t')
+                    .long("type")
+                    .takes_value(true)
+                    .possible_values(["f", "d", "l"]),
+            )
+            .get_matches();
 
-        let starting_point = args.next().unwrap();
-        let mut expression = Vec::new();
+        let starting_points = matches
+            .values_of("starting-point")
+            .unwrap()
+            .map(|value| PathBuf::from(value))
+            .collect();
 
-        while let Some(action) = args.next() {
-            if let Some(value) = args.next() {
-                expression.push((action, value));
-            }
+        let mut options = Vec::new();
+
+        if let Some(value) = matches.value_of("name") {
+            options.push(("name".to_string(), value.to_owned()));
+        }
+
+        if let Some(value) = matches.value_of("type") {
+            options.push(("type".to_string(), value.to_owned()));
         }
 
         Config {
-            starting_point,
-            expression,
+            starting_points,
+            options,
         }
     }
 }
@@ -39,7 +70,9 @@ impl App {
     }
 
     pub fn run(&self) {
-        self.visit_path(&Path::new(&self.config.starting_point));
+        for starting_point in &self.config.starting_points {
+            self.visit_path(starting_point);
+        }
     }
 
     fn visit_path(&self, path: &Path) {
@@ -59,24 +92,23 @@ impl App {
     }
 
     fn is_match(&self, path: &Path) -> bool {
-        self.config
-            .expression
-            .iter()
-            .all(|(name, value)| match name.as_str() {
-                "-name" => self.name_action(value, path.file_name().unwrap().to_str().unwrap()),
-                "-type" => self.type_action(value, path),
-                _ => panic!("invalid action"),
-            })
+        self.config.options.iter().all(|(option, value)| {
+            match option.as_str() {
+                "name" => self.name_option(value, path.file_name().unwrap().to_str().unwrap()),
+                "type" => self.type_option(value, path),
+                _ => panic!("invalid option"),
+            }
+        })
     }
 
-    fn name_action(&self, value: &String, filename: &str) -> bool {
+    fn name_option(&self, value: &str, filename: &str) -> bool {
         let re = Regex::new(value).expect("invalid regex");
 
         re.is_match(filename)
     }
 
-    fn type_action(&self, value: &String, path: &Path) -> bool {
-        match value.as_str() {
+    fn type_option(&self, value: &str, path: &Path) -> bool {
+        match value {
             "f" => path.is_file(),
             "d" => path.is_dir(),
             "l" => path.is_symlink(),

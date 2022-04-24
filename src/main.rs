@@ -1,11 +1,7 @@
-use rfind::{App, Config};
-
-use std::env;
+use rfind::{Config, App};
 
 fn main() {
-    let args = env::args();
-
-    let config = Config::new(args);
+    let config = Config::new();
     let app = App::new(config);
 
     app.run();

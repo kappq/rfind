@@ -8,26 +8,30 @@ cargo install rfind
 ```
 
 ## Usage
-The usage is very similar to the `find` command, but a lot simpler.
+The usage is very similar to the `find` command, but a lot simpler. Type `rfind --help` to see an help message.
 
-### Syntax
 ```
-rfind starting-point expression
-```
-where `starting-point` is a path to a directory and `expression` is a list of options.
+rfind 0.2.0
+Kappa <f.cappetti.05@gmail.com>
+A simple clone of the `find` command
 
-### Options
-There are only two options:
-- `-name <regex>` matches the given regex against the file name;
-- `-type f|d|l` matches the file type and it can be:
-    - `f` matches a file;
-    - `d` matches a directory;
-    - `l` matches a symbolic-link.
+USAGE:
+    rfind [OPTIONS] [starting-point]...
+
+ARGS:
+    <starting-point>...    The starting-point of the program [default: .]
+
+OPTIONS:
+    -h, --help           Print help information
+    -n, --name <name>    The regex to match
+    -t, --type <type>    The type of the file [possible values: f, d, l]
+    -V, --version        Print version information
+```
 
 ## To-Do
 - [ ] Testing;
 - [ ] Improve error handling;
-- [ ] Improve CLI interface and argument parsing;
-- [ ] Multiple starting points;
+- [x] Improve CLI interface and argument parsing;
+- [x] Multiple starting points;
 - [ ] Options for size, modification date, permission and owner;
 - [ ] Delete files.
