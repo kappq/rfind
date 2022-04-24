@@ -29,9 +29,9 @@ OPTIONS:
 ```
 
 ## To-Do
-- [ ] Testing;
-- [ ] Improve error handling;
-- [x] Improve CLI interface and argument parsing;
-- [x] Multiple starting points;
-- [ ] Options for size, modification date, permission and owner;
+- [ ] Testing.
+- [ ] Improve error handling.
+- [x] Improve CLI interface and argument parsing.
+- [x] Multiple starting points.
+- [ ] Options for size, modification date, permission and owner.
 - [ ] Delete files.
