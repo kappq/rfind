@@ -35,3 +35,4 @@ OPTIONS:
 - [x] Multiple starting points.
 - [ ] Options for size, modification date, permission and owner.
 - [ ] Delete files.
+- [ ] Optimize performance.
