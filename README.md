@@ -16,15 +16,15 @@ Kappa <f.cappetti.05@gmail.com>
 A simple clone of the `find` command
 
 USAGE:
-    rfind [OPTIONS] [starting-point]...
+    rfind [OPTIONS] [STARTING-POINT]...
 
 ARGS:
-    <starting-point>...    The starting-point of the program [default: .]
+    <STARTING-POINT>...    The starting-point of the program [default: .]
 
 OPTIONS:
     -h, --help           Print help information
-    -n, --name <name>    The regex to match
-    -t, --type <type>    The type of the file [possible values: f, d, l]
+    -n, --name <NAME>    The regex to match
+    -t, --type <TYPE>    The type of the file [possible values: f, d, l]
     -V, --version        Print version information
 ```
 
