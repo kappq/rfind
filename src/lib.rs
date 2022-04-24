@@ -16,12 +16,14 @@ impl Config {
             .about(crate_description!())
             .arg(
                 Arg::new("starting-point")
+                    .value_name("STARTING-POINT")
                     .help("The starting-point of the program")
                     .default_value(".")
                     .multiple_values(true),
             )
             .arg(
                 Arg::new("name")
+                    .value_name("NAME")
                     .help("The regex to match")
                     .short('n')
                     .long("name")
@@ -29,6 +31,7 @@ impl Config {
             )
             .arg(
                 Arg::new("type")
+                    .value_name("TYPE")
                     .help("The type of the file")
                     .short('t')
                     .long("type")
